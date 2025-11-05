@@ -124,13 +124,51 @@ bash scripts/04_process_preds.sh
 # Step 5: Phage quality check and clustering
 bash scripts/05_phage_qc.sh
 
+# Step 6: Phage host prediction
+bash scripts/06_host_pred.sh
+
 ```
-
-## Citation
-
 
 ## Contact
 
 For questions or issues, please contact:
 - Robert Hoehndorf: robert.hoehndorf@kaust.edu.sa
 - Alejandra Lopez-Velazquez: alejandra.velazquez@kaust.edu.sa
+
+
+## Citation
+
+### Read Quality Control
+
+  * Chen, Shifu, et al. "fastp: an ultra-fast all-in-one FASTQ preprocessor." *Bioinformatics*, vol. 34, no. 17, 2018, pp. i884–i890.
+  * Shen, Weijun, et al. "SeqKit: a cross-platform and ultrafast toolkit for FASTA/Q file manipulation." *PLoS ONE*, vol. 11, no. 10, 2016, e0163962.
+
+-----
+
+### Genome Assembly
+
+  * Bankevich, Alexander, et al. "SPAdes: a new genome assembly algorithm and its applications to single-cell sequencing." *Journal of Computational Biology*, vol. 19, no. 5, 2012, pp. 455–477.
+  * Chen, Shifu, et al. "MEGAHIT: an ultra-fast single-node solution for large and complex metagenomics assembly." *Bioinformatics*, vol. 31, no. 10, 2015, pp. 1674–1676.
+  * Cheng, Heng, et al. "Hifiasm: phase-consistent assembly of high-fidelity reads." *Nature Methods*, vol. 18, 2021, pp. 170–175.
+  * Kolmogorov, Mikhail, et al. "Flye: assembly of long error-prone reads using repeat graphs." *Nature Methods*, vol. 15, no. 8, 2018, pp. 581–587.
+  * Wick, Ryan R., et al. "Autocycler: long-read consensus assembly for bacterial genomes." *Bioinformatics*, 28 Aug. 2025.
+
+-----
+
+### Phage Identification & Clustering
+
+  * Al-Ani, Faisal, et al. "PhaBOX: an ensemble learning pipeline for the identification of complete, high-quality, and high-confidence viral genomes in metagenomes." *Bioinformatics Advances*, vol. 2, no. 1, 2022.
+  * Camargo, Antonio P., et al. "GeNomad: identification of mobile genetic elements." *Bioinformatics*, vol. 40, no. 1, 2024.
+  * Guo, Jing, et al. "VirSorter2: a multi-classifier, expert-guided approach to detect diverse DNA and RNA viruses." *Microbiome*, vol. 9, no. 37, 2021.
+  * Hou, Shengwei, et al. "DeepMicroClass sorts metagenomic contigs into prokaryotes, eukaryotes and viruses." *NAR Genomics and Bioinformatics*, vol. 6, no. 2, 2024, lqae044.
+  * Kieft, Tessa L., et al. "VIBRANT: automated identification and annotation of microbial viruses, and evaluation of viral community function from genomic sequences." *mSystems*, vol. 4, no. 4, 2019, e00066-19.
+  * Nayfach, Stephen, et al. "CheckV assesses the quality and completeness of metagenome-assembled viral genomes." *Nature biotechnology*, vol. 39, 2021, pp. 578-585.
+  * Tang, Xubo, et al. "PLASMe: a tool to identify PLASMid contigs from short-read assemblies using transformer." *Nucleic Acids Research*, vol. 51.15, 2023,pp. e83-e83.
+  * Zielezinski, Andrzej, et al. "Ultrafast and accurate sequence alignment and clustering of viral genomes." *Nature Methods*, vol. 22, no. 6, 15 May 2025, pp. 1191–1194.
+
+-----
+
+### Host Prediction & Taxonomy
+
+  * Chaumeil, Pierre-Alain, et al. "GTDB-Tk: A toolkit to classify genomes with the Genome Taxonomy Database." *Bioinformatics*, vol. 36, no. 7, 2020, pp. 1925–1927.
+  * Galiez, Corinne, et al. "iPHoP: integration of all-vs-all gene similarities to predict phage hosts." *Bioinformatics*, vol. 35, no. 12, 2019, pp. 2021–2028.
