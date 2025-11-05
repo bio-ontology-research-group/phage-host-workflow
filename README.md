@@ -97,7 +97,7 @@ mkdir -p /path/to/db
 
 The database requires **\~140 GB** of space.
 
-**Create the Target Directory:**
+Create the Target Directory:
 ```bash
 mkdir -p /path/to/db/gtdbtk_db
 wget -P /path/to/db/gtdbtk_db https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_package/full_package/gtdbtk_data.tar.gz
@@ -146,10 +146,6 @@ python /path/to/phage-workflow/scripts/utils/PLASMe/PLASMe_db.py --outdir /path/
 ```
 
 -----
-
-Would you like me to put these instructions into a single, executable shell script that defines the paths once and runs all the downloads?
-
----
 
 ## 🚀 Usage
 
