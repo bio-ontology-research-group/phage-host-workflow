@@ -68,9 +68,6 @@ Expected files:
 - `rh11_hifi.fastq.gz` - PacBio HiFi reads
 - `rh11_ont.fastq.gz` - Oxford Nanopore reads
 
-Place these files in the `data/` directory.
-
-
 Place all files in the `data/` directory before running the workflow.
 
 ---
@@ -83,6 +80,23 @@ To create all environments at once, run the following command from the root of t
 ```bash
 for f in envs/*.yml; do conda env create -f "$f"; done
 ```
+
+---
+
+## 📚 Database Setup
+
+Several tools in this workflow require external reference databases.  
+Before running the pipeline, download and configure the following databases:
+
+| Tool | Environment Variable | Description | Example Setup Command |
+|------|----------------------|--------------|------------------------|
+| **GeNomad** | `GENOMAD_DB` | Reference database for viral sequence classification | `genomad download-db $GENOMAD_DB` |
+| **VirSorter2** | `VIRSORTER2_DB` | Database for viral genome identification | `virsorter setup -d $VIRSORTER2_DB -j 16` |
+| **VIBRANT** | `VIBRANT_DB` | Functional annotation database | Automatically configured when running VIBRANT, or set manually via `export VIBRANT_DB=/path/to/VIBRANT_databases` |
+| **PhaBOX** | `PHABOX_DB` | Model and taxonomy data for phage identification | `phabox download-db --outdir $PHABOX_DB` |
+| **PLASMe** | `PLASME_DB` | Plasmid identification database | `plasme download-db --outdir $PLASME_DB` |
+| **CheckV** | `CHECKV_DB` | Reference for viral genome completeness estimation | `checkv download_database $CHECKV_DB` |
+| **GTDB-Tk** | `GTDBTK_DATA_PATH` | Reference taxonomy database for host classification | `export GTDBTK_DATA_PATH=/path/to/gtdbtk_db` |
 
 ---
 
