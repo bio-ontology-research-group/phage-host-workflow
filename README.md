@@ -85,7 +85,6 @@ for f in envs/*.yml; do conda env create -f "$f"; done
 
 ## 📚 Database Setup
 
-Before running the main workflow, execute the following commands to download and configure all external reference databases.
 Before running any step of the main workflow, you must execute the following commands to download and configure all external reference databases. You must replace /path/to/db with your actual, desired absolute directory path.
 
 General Note: You should activate the specific Conda environment for each tool before running its respective download command. For detailed usage, always refer to the tool's official GitHub repository or documentation.
