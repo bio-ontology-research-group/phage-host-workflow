@@ -1,11 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=phage_id_rh11
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=128G
-#SBATCH --time=72:00:00
-#SBATCH --mail-type=END
-#SBATCH --output=../logs/phage_id_rh11_%j.out
-#SBATCH --error=../logs/phage_id_rh11_%j.err
 
 # ================================
 # Phage Identification for rh11 Assemblies
@@ -25,19 +18,20 @@ source ~/miniconda3/etc/profile.d/conda.sh
 SAMPLE="rh11"
 
 # Input/Output directories
-ASSEMBLY_DIR="../results/02_qc_assemblies/filtered"
-OUT_DIR="../results/03_phage_id"
+BASE="/path/to/phage-host-workflow"
+ASSEMBLY_DIR="${BASE}/results/02_qc_assemblies/filtered"
+OUT_DIR="${BASE}/results/03_phage_id"
 
 # Resources
 THREADS=16
 
 # Database paths - UPDATE THESE TO YOUR SYSTEM
-GENOMAD_DB="/ibex/scratch/projects/c2014/EmptyQuarter_Data/soil/databases/genomad_db"
-VIR_DB="/ibex/sw/rl9c/virsorter2/2.2.4/rl9_conda3/db"
-VIBRANT_DB="$vibrant_data"
-PHABOX_DB="/ibex/scratch/projects/c2014/EmptyQuarter_Data/soil/databases/phabox_db_v2"
-PLASME_DB="/ibex/scratch/projects/c2014/EmptyQuarter_Data/soil/databases/plasme/DB"
-PLASME_SRC="/ibex/scratch/projects/c2014/alelopezv/EmptyQuarter_WGS/src/PLASMe"
+GENOMAD_DB="/path/to/genomad_db"
+VIR_DB="/path/to/virsorter2_db"
+VIBRANT_DB="/path/to/vibrant_db"
+PHABOX_DB="/path/to/phabox_db"
+PLASME_DB="/path/to/plasme_db"
+PLASME_SRC="${BASE}/scripts/utils/PLASMe"
 
 # Create output directory structure
 mkdir -p "${OUT_DIR}"/{genomad,virsorter2,vibrant,phamer,deepmicroclass,plasme}

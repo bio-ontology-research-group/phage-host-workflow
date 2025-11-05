@@ -1,11 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=consolidate_rh11
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=16G
-#SBATCH --time=02:00:00
-#SBATCH --mail-type=END
-#SBATCH --output=../logs/consolidate_rh11_%j.out
-#SBATCH --error=../logs/consolidate_rh11_%j.err
 
 # ================================
 # Consolidate and Filter Assemblies
@@ -20,14 +13,17 @@
 # Output: Filtered assemblies in ../results/02_qc_assemblies/
 # ================================
 
+set -euo pipefail
 source ~/miniconda3/etc/profile.d/conda.sh
 
 # ================================
 # CONFIGURATION
 # ================================
 SAMPLE="rh11"
-ASSEMBLY_DIR="../results/01_assemblies"
-OUT_DIR="../results/02_qc_assemblies"
+
+BASE="/path/to/phage-host-workflow"
+ASSEMBLY_DIR="${BASE}/results/01_assemblies"
+OUT_DIR="${BASE}/results/02_qc_assemblies"
 THREADS=8
 
 # Filtering thresholds

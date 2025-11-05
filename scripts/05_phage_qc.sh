@@ -1,9 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=phage_qc
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=64G
-#SBATCH --time=06:00:00
-#SBATCH --mail-type=FAIL
 
 # ================================
 # Phage QC and Clustering Pipeline
@@ -16,19 +11,18 @@
 # ================================
 
 set -euo pipefail
-
 source ~/miniconda3/etc/profile.d/conda.sh
 
 # ================================
 # CONFIGURATION
 # ================================
+BASE="/path/to/phage-host-workflow"
 
-BASE_DIR="/ibex/scratch/projects/c2014/alelopezv/phage-host-workflow/results"
-PHAGE_CONTIGS="${BASE_DIR}/04_consolidated/phage_contigs"
+PHAGE_CONTIGS="${BASE}/results/04_consolidated/phage_contigs"
 CHECKV_DB="/ibex/scratch/projects/c2014/EmptyQuarter_Data/soil/databases/checkv-db-v1.5"
 
-CHECKV_OUT="${BASE_DIR}/05_checkv"
-VCLUST_OUT="${BASE_DIR}/06_vclust"
+CHECKV_OUT="${BASE}/results/05_checkv"
+VCLUST_OUT="${BASE}/results/06_vclust"
 CLEAN_FASTA="${CHECKV_OUT}/clean_contigs"
 
 mkdir -p "${CHECKV_OUT}" "${VCLUST_OUT}" "${CLEAN_FASTA}"

@@ -1,11 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=qc_rh11
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
-#SBATCH --time=12:00:00
-#SBATCH --mail-type=END
-#SBATCH --output=../logs/qc_rh11_%j.out
-#SBATCH --error=../logs/qc_rh11_%j.err
 
 # ================================
 # Quality Control of Sequencing Reads for rh11 Isolate
@@ -22,13 +15,15 @@
 # Output: Quality-controlled reads and statistics in ../results/00_qc_reads/
 # ================================
 
+set -euo pipefail
 source ~/miniconda3/etc/profile.d/conda.sh
 
 # ================================
 # CONFIGURATION
 # ================================
-DATA_DIR="../data"
-OUT_DIR="../results/00_qc_reads"
+BASE="/path/to/phage-host-workflow"
+DATA_DIR="${BASE}/data"
+OUT_DIR="${BASE}/results/00_qc_reads"
 THREADS=8
 
 # Sample name

@@ -1,8 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=process_pred
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=16G
-#SBATCH --time=01:00:00
 
 # ================================
 # Process Phage Predictions Pipeline
@@ -21,10 +17,11 @@ conda activate python-utils
 # ================================
 # CONFIGURATION
 # ================================
+BASE="/path/to/phage-host-workflow"
 
-ASSEMBLY_DIR="/ibex/scratch/projects/c2014/alelopezv/phage-host-workflow/results/02_qc_assemblies/filtered"
-PRED_DIR="/ibex/scratch/projects/c2014/alelopezv/phage-host-workflow/results/03_phage_id"
-CONS_DIR="/ibex/scratch/projects/c2014/alelopezv/phage-host-workflow/results/04_consolidated"
+ASSEMBLY_DIR="${BASE}/results/02_qc_assemblies/filtered"
+PRED_DIR="${BASE}/results/03_phage_id"
+CONS_DIR="${BASE}/results/04_consolidated"
 
 echo "================================"
 echo "Phage Prediction Processing Pipeline"

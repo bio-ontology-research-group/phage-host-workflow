@@ -1,11 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=assemblies_rh11
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=64G
-#SBATCH --time=48:00:00
-#SBATCH --mail-type=END
-#SBATCH --output=../logs/assemblies_rh11_%j.out
-#SBATCH --error=../logs/assemblies_rh11_%j.err
 
 # ================================
 # Genome Assembly for rh11 Isolate
@@ -22,21 +15,20 @@
 set -euo pipefail
 source ~/miniconda3/etc/profile.d/conda.sh
 
-PHAGE_WF="/ibex/scratch/projects/c2014/alelopezv/phage-host-workflow"
-AUTOCYCLER_SCRIPT="${PHAGE_WF}/scripts/utils/autocycler_full.sh"
-
 # ================================
 # CONFIGURATION
 # ================================
 SAMPLE="rh11"
 
+BASE="/path/to/phage-host-workflow"
+AUTOCYCLER_SCRIPT="${BASE}/scripts/utils/autocycler_full.sh"
+
 # Input directories
-READS_ILLUMINA="${PHAGE_WF}/results/00_qc_reads/illumina"
-READS_PB="${PHAGE_WF}/data"
-READS_ONT="${PHAGE_WF}/data"
+READS_ILLUMINA="${BASE}/results/00_qc_reads/illumina"
+LONG_READS="${BASE}/data"
 
 # Output directories
-ASSEMBLY_DIR="${PHAGE_WF}/results/01_assemblies"
+ASSEMBLY_DIR="${BASE}/results/01_assemblies"
 
 # Assembly parameters
 THREADS=16
@@ -49,8 +41,8 @@ mkdir -p "${ASSEMBLY_DIR}"/{pacbio,ont}/{flye,hifiasm,autocycler}
 # Input files
 ILMN_R1="${READS_ILLUMINA}/${SAMPLE}_R1.clean.fastq.gz"
 ILMN_R2="${READS_ILLUMINA}/${SAMPLE}_R2.clean.fastq.gz"
-HIFI="${READS_PB}/${SAMPLE}_hifi.fastq.gz"
-ONT="${READS_ONT}/${SAMPLE}_ont.fastq.gz"
+HIFI="${LONG_READS}/${SAMPLE}_hifi.fastq.gz"
+ONT="${LONG_READS}/${SAMPLE}_ont.fastq.gz"
 
 # ================================
 # ILLUMINA ASSEMBLIES
