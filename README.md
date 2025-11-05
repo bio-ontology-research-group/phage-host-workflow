@@ -85,92 +85,91 @@ for f in envs/*.yml; do conda env create -f "$f"; done
 
 ## 📚 Database Setup
 
-Several tools in this workflow require external reference databases.  
-Before running the pipeline, download and configure the following databases:
+Before running the main workflow, execute the following commands to download and configure all external reference databases.
 
-| Tool | Environment Variable | Description | Example Setup Command |
-|------|----------------------|--------------|------------------------|
-| **GeNomad** | `GENOMAD_DB` | Reference database for viral sequence classification | `genomad download-db $GENOMAD_DB` |
-| **VirSorter2** | `VIRSORTER2_DB` | Database for viral genome identification | `virsorter setup -d $VIRSORTER2_DB -j 4` |
-| **VIBRANT** | `VIBRANT_DB` | Functional annotation database | `download-db.sh`, then set path manually via `export VIBRANT_DB=/path/to/VIBRANT_databases` |
-| **PhaBOX** | `PHABOX_DB` | Model and taxonomy data for phage identification | `wget https://github.com/KennthShang/PhaBOX/releases/download/v2/phabox_db_v2_1.zip` |
-| **PLASMe** | `PLASME_DB` | Plasmid identification database | `python /path/to/phage-workflow/scripts/utils/PLASMe/PLASMe_db.py` |
-| **CheckV** | `CHECKV_DB` | Reference for viral genome completeness estimation | `checkv download_database $CHECKV_DB` |
-| **GTDB-Tk** | `GTDBTK_DATA_PATH` | Reference taxonomy database for host classification | `export GTDBTK_DATA_PATH=/path/to/gtdbtk_db` |
+### Prerequisite: Create the Base Directory
 
-## 📚 Database Setup
-
-Before running the main workflow steps, you must download and configure all external reference databases. Each tool requires an environment variable to be set, pointing to the database location.
-
-### 1. GTDB-Tk (Reference Taxonomy)
-
-The database requires **~140 GB** of space.
-
-**Download the Full Package Archive:** (Run this in your desired storage location)
-```
-wget [https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_package/full_package/gtdbtk_data.tar.gz](https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_package/full_package/gtdbtk_data.tar.gz)
-```
-**Unarchive the Data:** 
-```
-tar xvzf gtdbtk_data.tar.gz
+```bash
+mkdir -p /path/to/db
 ```
 
-### 2. CheckV (Viral Completeness)
+-----
 
-The reference database for viral genome completeness estimation.
+### GTDB-Tk (Reference Taxonomy) 
 
-| Environment Variable | `$CHECKV_DB` |
-| :--- | :--- |
-| **Setup Command** | `checkv download_database $CHECKV_DB` |
+The database requires **\~140 GB** of space.
 
----
+1.  **Create the Target Directory:**
+    ```bash
+    mkdir -p /path/to/db/gtdbtk_db
+    ```
+2.  **Download the Full Package Archive:**
+    ```bash
+    wget -P /path/to/db/gtdbtk_db https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_package/full_package/gtdbtk_data.tar.gz
+    ```
+3.  **Unarchive the Data:**
+    ```bash
+    tar xvzf /path/to/db/gtdbtk_db/gtdbtk_data.tar.gz -C /path/to/db/gtdbtk_db --strip-components 1
+    ```
 
-### 3. GeNomad (Viral & MGE Classification) 🦠
+### CheckV (Viral Completeness)
 
-The reference database for viral sequence classification.
-
-| Environment Variable | `$GENOMAD_DB` |
-| :--- | :--- |
-| **Setup Command** | `genomad download-db $GENOMAD_DB` |
-
-### 4. VirSorter2 (Viral Identification) 🧬
-
-The database for robust viral genome identification.
-
-| Environment Variable | `$VIRSORTER2_DB` |
-| :--- | :--- |
-| **Setup Command** | `virsorter setup -d $VIRSORTER2_DB -j 4` |
-
-### 5. PhaBOX (Phage Identification) 📦
-
-The model and taxonomy data for phage identification.
-
-| Environment Variable | `$PHABOX_DB` |
-| :--- | :--- |
-| **Setup Command** | `phabox download-db --outdir $PHABOX_DB` |
-| **Alternative Manual Setup:** | 1. `wget https://github.com/KennthShang/PhaBOX/releases/download/v2/phabox_db_v2_1.zip` |
-| | 2. `unzip phabox_db_v2_1.zip -d $PHABOX_DB` |
-
-### 6. VIBRANT (Functional Annotation) 📝
-
-The functional annotation database.
-
-**Run the download script:**
-```
-download-db.sh
-```
-**Manually Set the Path:** After the script finishes and creates the database directory (e.g., `VIBRANT_databases`), you must set the environment variable:
-```
-export VIBRANT_DB=/path/to/VIBRANT_databases
+```bash
+checkv download_database /path/to/db/checkv_db
 ```
 
-### 7. PLASMe (Plasmid Identification) 🧬
+### GeNomad (Viral & MGE Classification)
 
-The plasmid identification database.
+```bash
+genomad download-db /path/to/db/genomad_db
+```
 
-| Environment Variable | `$PLASME_DB` |
-| :--- | :--- |
-| **Setup Command** | `python /path/to/phage-workflow/scripts/utils/PLASMe/PLASMe_db.py` |
+### VirSorter2 (Viral Identification)
+
+```bash
+virsorter setup -d /path/to/db/virsorter2_db -j 4
+```
+
+### PhaBOX (Phage Identification)
+
+1.  **Create the Target Directory:**
+    ```bash
+    mkdir -p /path/to/db/phabox_db
+    ```
+2.  **Download Archive to Temporary Location:**
+    ```bash
+    wget -P /tmp/ https://github.com/KennthShang/PhaBOX/releases/download/v2/phabox_db_v2_1.zip
+    ```
+3.  **Unzip to DB Path:**
+    ```bash
+    unzip /tmp/phabox_db_v2_1.zip -d /path/to/db/phabox_db
+    ```
+
+### VIBRANT (Functional Annotation)
+
+VIBRANT requires the database path to be explicitly set after its internal script, `download-db.sh`, runs.
+
+1.  **Run Setup Script:**
+    ```bash
+    download-db.sh
+    export VIBRANT_DB=/path/to/VIBRANT_databases
+    ```
+-----
+
+### PLASMe (Plasmid Identification) 
+
+1.  **Create the Target Directory:**
+    ```bash
+    mkdir -p /path/to/db/plasme_db
+    ```
+2.  **Setup Command:**
+    ```bash
+    python /path/to/phage-workflow/scripts/utils/PLASMe/PLASMe_db.py --outdir /path/to/db/plasme_db
+    ```
+
+-----
+
+Would you like me to put these instructions into a single, executable shell script that defines the paths once and runs all the downloads?
 
 ---
 
