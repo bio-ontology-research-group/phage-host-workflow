@@ -91,12 +91,86 @@ Before running the pipeline, download and configure the following databases:
 | Tool | Environment Variable | Description | Example Setup Command |
 |------|----------------------|--------------|------------------------|
 | **GeNomad** | `GENOMAD_DB` | Reference database for viral sequence classification | `genomad download-db $GENOMAD_DB` |
-| **VirSorter2** | `VIRSORTER2_DB` | Database for viral genome identification | `virsorter setup -d $VIRSORTER2_DB -j 16` |
-| **VIBRANT** | `VIBRANT_DB` | Functional annotation database | Automatically configured when running VIBRANT, or set manually via `export VIBRANT_DB=/path/to/VIBRANT_databases` |
-| **PhaBOX** | `PHABOX_DB` | Model and taxonomy data for phage identification | `phabox download-db --outdir $PHABOX_DB` |
-| **PLASMe** | `PLASME_DB` | Plasmid identification database | `plasme download-db --outdir $PLASME_DB` |
+| **VirSorter2** | `VIRSORTER2_DB` | Database for viral genome identification | `virsorter setup -d $VIRSORTER2_DB -j 4` |
+| **VIBRANT** | `VIBRANT_DB` | Functional annotation database | `download-db.sh`, then set path manually via `export VIBRANT_DB=/path/to/VIBRANT_databases` |
+| **PhaBOX** | `PHABOX_DB` | Model and taxonomy data for phage identification | `wget https://github.com/KennthShang/PhaBOX/releases/download/v2/phabox_db_v2_1.zip` |
+| **PLASMe** | `PLASME_DB` | Plasmid identification database | `python /path/to/phage-workflow/scripts/utils/PLASMe/PLASMe_db.py` |
 | **CheckV** | `CHECKV_DB` | Reference for viral genome completeness estimation | `checkv download_database $CHECKV_DB` |
 | **GTDB-Tk** | `GTDBTK_DATA_PATH` | Reference taxonomy database for host classification | `export GTDBTK_DATA_PATH=/path/to/gtdbtk_db` |
+
+## 📚 Database Setup
+
+Before running the main workflow steps, you must download and configure all external reference databases. Each tool requires an environment variable to be set, pointing to the database location.
+
+### 1. GTDB-Tk (Reference Taxonomy)
+
+The database requires **~140 GB** of space.
+
+**Download the Full Package Archive:** (Run this in your desired storage location)
+```
+wget [https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_package/full_package/gtdbtk_data.tar.gz](https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_package/full_package/gtdbtk_data.tar.gz)
+```
+**Unarchive the Data:** 
+```
+tar xvzf gtdbtk_data.tar.gz
+```
+
+### 2. CheckV (Viral Completeness)
+
+The reference database for viral genome completeness estimation.
+
+| Environment Variable | `$CHECKV_DB` |
+| :--- | :--- |
+| **Setup Command** | `checkv download_database $CHECKV_DB` |
+
+---
+
+### 3. GeNomad (Viral & MGE Classification) 🦠
+
+The reference database for viral sequence classification.
+
+| Environment Variable | `$GENOMAD_DB` |
+| :--- | :--- |
+| **Setup Command** | `genomad download-db $GENOMAD_DB` |
+
+### 4. VirSorter2 (Viral Identification) 🧬
+
+The database for robust viral genome identification.
+
+| Environment Variable | `$VIRSORTER2_DB` |
+| :--- | :--- |
+| **Setup Command** | `virsorter setup -d $VIRSORTER2_DB -j 4` |
+
+### 5. PhaBOX (Phage Identification) 📦
+
+The model and taxonomy data for phage identification.
+
+| Environment Variable | `$PHABOX_DB` |
+| :--- | :--- |
+| **Setup Command** | `phabox download-db --outdir $PHABOX_DB` |
+| **Alternative Manual Setup:** | 1. `wget https://github.com/KennthShang/PhaBOX/releases/download/v2/phabox_db_v2_1.zip` |
+| | 2. `unzip phabox_db_v2_1.zip -d $PHABOX_DB` |
+
+### 6. VIBRANT (Functional Annotation) 📝
+
+The functional annotation database.
+
+**Run the download script:**
+```
+download-db.sh
+```
+**Manually Set the Path:** After the script finishes and creates the database directory (e.g., `VIBRANT_databases`), you must set the environment variable:
+```
+export VIBRANT_DB=/path/to/VIBRANT_databases
+```
+
+### 7. PLASMe (Plasmid Identification) 🧬
+
+The plasmid identification database.
+
+| Environment Variable | `$PLASME_DB` |
+| :--- | :--- |
+| **Setup Command** | `python /path/to/phage-workflow/scripts/utils/PLASMe/PLASMe_db.py` |
 
 ---
 
